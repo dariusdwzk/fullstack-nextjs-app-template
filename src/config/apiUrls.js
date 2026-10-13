@@ -92,6 +92,15 @@ const config = {
 };
 
 
+/*
+ Set `NEXT_PUBLIC_SAME_ORIGIN_LOCAL_API=true` to send browser requests to the current origin
+ (e.g. when the app is accessed through a remote preview host instead of localhost).
+ The PHP server is then reached via the `/php-server` rewrite in `next.config.js`.
+*/
+const sameOriginLocalApi = typeof window !== 'undefined' && process.env.NEXT_PUBLIC_SAME_ORIGIN_LOCAL_API === 'true';
+const localApiBase = sameOriginLocalApi ? '' : 'http://localhost:3000';
+const localPhpBase = sameOriginLocalApi ? '/php-server' : 'http://localhost:4000';
+
 /**
  * API for Test on Localhost
  * 
@@ -103,21 +112,21 @@ const localConfig = {
 	 TYPE: Site Configuration
 	 ------------------------------------------
 	*/
-	"MENU": `http://localhost:3000/api/navigation`,
+	"MENU": `${localApiBase}/api/navigation`,
 
 
 	/*
 	 TYPE: Posts
 	 ------------------------------------------
 	*/
-	"RECEIVE_DEMO_LIST": `http://localhost:3000/api/posts`,
-	"RECEIVE_DEMO_LISTDETAIL": `http://localhost:3000/api/post-detail?id={id}`,
+	"RECEIVE_DEMO_LIST": `${localApiBase}/api/posts`,
+	"RECEIVE_DEMO_LISTDETAIL": `${localApiBase}/api/post-detail?id={id}`,
 
 	/*
 	 TYPE: Posts Pagination
 	 ------------------------------------------
 	*/
-	 "RECEIVE_PAGE_LIST": `http://localhost:3000/api/pagination/page-{page}`,
+	 "RECEIVE_PAGE_LIST": `${localApiBase}/api/pagination/page-{page}`,
 
 	
 
@@ -125,8 +134,8 @@ const localConfig = {
 	 TYPE: User (The PHP files are located at `./public/server/`)
 	 ------------------------------------------
 	*/
-	"LOGIN_REQUEST": "http://localhost:4000/sessions-create.php",
-	"USER_AUTHENTICATE": "http://localhost:4000/authenticate.php",
+	"LOGIN_REQUEST": `${localPhpBase}/sessions-create.php`,
+	"USER_AUTHENTICATE": `${localPhpBase}/authenticate.php`,
 	"SIGNUP_REQUEST": "",
 
 	  
@@ -134,16 +143,16 @@ const localConfig = {
 	 TYPE: CRUD (The PHP files are located at `./public/server/`)
 	 ------------------------------------------
 	*/
-	"CRUD_SERVICE": `http://localhost:4000/curd.php`,
-	"CRUD_DATA_INIT": `http://localhost:4000/curd-data-init.php`,
+	"CRUD_SERVICE": `${localPhpBase}/curd.php`,
+	"CRUD_DATA_INIT": `${localPhpBase}/curd-data-init.php`,
 	
 
 	/*
 	 TYPE: Video
 	 ------------------------------------------
 	*/
-	"VIDEO_URL": `http://localhost:3000/core/video-stream`,
-    "HLS_VIDEO_URL":  `http://localhost:3000/core/hls/{id}/{slug}`,
+	"VIDEO_URL": `${localApiBase}/core/video-stream`,
+    "HLS_VIDEO_URL":  `${localApiBase}/core/hls/{id}/{slug}`,
     "HLS_VIDEO_KEY": `/api/video-key`,  // Please don't write domain
 
 	  
@@ -151,20 +160,20 @@ const localConfig = {
 	 TYPE: Downlaod remote file
 	 ------------------------------------------
 	*/
-    "DOWNLOAD_REMOTE_FILE": `http://localhost:3000/api/extract-file?sourceurl={sourceurl}`,
+    "DOWNLOAD_REMOTE_FILE": `${localApiBase}/api/extract-file?sourceurl={sourceurl}`,
 
 	/*
 	 TYPE: Dynamic Routes
 	 ------------------------------------------
 	*/
-    "DYNAMIC_ROUTE_1": `http://localhost:3000/api/dynamic-routes/page1`,
-    "DYNAMIC_ROUTE_2": `http://localhost:3000/api/dynamic-routes/page2`,
+    "DYNAMIC_ROUTE_1": `${localApiBase}/api/dynamic-routes/page1`,
+    "DYNAMIC_ROUTE_2": `${localApiBase}/api/dynamic-routes/page2`,
 
 	/*
 	 TYPE: Auth
 	 ------------------------------------------
 	*/
-    "AUTH_PASSKEY": `http://localhost:3000/api/passkey`,
+    "AUTH_PASSKEY": `${localApiBase}/api/passkey`,
 
     
 	/*

@@ -57,7 +57,23 @@ const nextConfig = {
     },
     env: {
         exportHtml: `${exportHtmlEnabled}`
-    }
+    },
+
+    // Allow dev resources (HMR, chunks) to be requested from extra hosts,
+    // e.g. `ALLOWED_DEV_ORIGINS=*.example.com,preview.example.org`
+    allowedDevOrigins: process.env.ALLOWED_DEV_ORIGINS ? process.env.ALLOWED_DEV_ORIGINS.split(',').map((s) => s.trim()).filter(Boolean) : undefined,
+
+    // Same-origin proxy to the local PHP server (see `NEXT_PUBLIC_SAME_ORIGIN_LOCAL_API` in `src/config/apiUrls.js`)
+    ...(exportHtmlEnabled ? {} : {
+        async rewrites() {
+            return [
+                {
+                    source: '/php-server/:path*',
+                    destination: `${process.env.PHP_SERVER_URL || 'http://localhost:4000'}/:path*`,
+                },
+            ]
+        },
+    }),
     /*
 
     // change the api route
