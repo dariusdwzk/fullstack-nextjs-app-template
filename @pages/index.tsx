@@ -44,11 +44,11 @@ const Home = ({initialReduxState}) => {
         <>
 
             <Head>
-                <title>HomePage</title>
+                <title>Balls</title>
                 <meta name="description" content="A whole-website building solution based on Next.js. It serves as a case to sort out the thinking." />
 
                 <SocialMetadata
-                    ogTitle={`HomePage`}
+                    ogTitle={`Balls`}
                     ogDesc={`A whole-website building solution based on Next.js. It serves as a case to sort out the thinking.`}
                     ogUrl={`${appData.siteUrl}/`}
                     ogImage={`${appData.siteUrl}/assets/images/logo-black.png`}
@@ -58,7 +58,7 @@ const Home = ({initialReduxState}) => {
             <Layout
                 isHome={true}
                 ssrNav={initialReduxState?.menuData.menuItems}
-                pageTitle="HomePage"
+                pageTitle="Balls"
                 contentComponent={<><MainContent /></>}
             />
 
